@@ -97,6 +97,8 @@ break_end() {
 
 
 #####################################
+############ sshd 服务 ###############
+#####################################
 install_ssh_server() {
     log "安装sshd服务..."
     apt-get update
@@ -121,6 +123,18 @@ set_root_password() {
 }
 #####################################
 
+
+
+#####################################
+############ 开启http代理 ############
+#####################################
+proxyOnClash() {
+    export https_proxy=http://172.22.90.3:6789
+    export http_proxy=http://172.22.90.3:6789
+    export all_proxy=socks5://172.22.90.3:6789
+    curl https://ipinfo.io/ip
+}
+#####################################
 
 
 
@@ -148,21 +162,6 @@ instruction_interaction_sh() {
 		1) linux_info ;;
 		2) clear ; send_stats "系统更新" ; linux_update ;;
 		3) clear ; send_stats "系统清理" ; linux_clean ;;
-		4) linux_tools ;;
-		5) linux_bbr ;;
-		6) linux_docker ;;
-		7) clear ; send_stats "warp管理" ; install wget
-			wget -N https://gitlab.com/fscarmen/warp/-/raw/main/menu.sh ; bash menu.sh [option] [lisence/url/token]
-		;;
-		8) linux_test ;;
-		9) linux_Oracle ;;
-		10) linux_ldnmp ;;
-		11) linux_panel ;;
-		12) linux_work ;;
-		13) linux_Settings ;;
-		14) linux_cluster ;;
-		15) kejilion_Affiliates ;;
-		16) games_server_tools ;;
 		00) kejilion_update ;;
 		0) clear ; exit ;;
 		*) echo "无效的输入!" ;;
@@ -174,6 +173,13 @@ instruction_interaction_sh() {
 
 # Main execution
 main() {
+
+
+    if [[ "${EUID}" -ne 0 ]]; then
+        log "这个脚本必须是root用户执行"
+        exit 1
+    fi
+
     info "打印日志"
 
     if [ "$#" -eq 0 ]; then
