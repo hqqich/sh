@@ -8,7 +8,7 @@ set -o pipefail # Fail pipeline if any command fails
 # Logging framework
 # Log format (logback-ish):
 # 2026-03-05 14:23:01.123 INFO  [base.sh] (line:42 func:main) message
-LOG_LEVEL="${LOG_LEVEL:-INFO}"   # DEBUG|INFO|WARN|ERROR
+LOG_LEVEL="${LOG_LEVEL:-DEBUG}"   # DEBUG|INFO|WARN|ERROR  这里可以改默认显示的日志级别
 NO_COLOR="${NO_COLOR:-false}"    # true disables color
 
 _log_now() {
@@ -62,13 +62,20 @@ log() {
     local line
     local func
     local level_pad
+    local caller_idx=1
+    local line_idx=0
     local color=""
     local reset=""
 
     ts="$(_log_now)"
-    script="$(basename "${BASH_SOURCE[1]}")"
-    line="${BASH_LINENO[0]}"
-    func="${FUNCNAME[1]:-main}"
+    if [[ "${FUNCNAME[1]:-}" =~ ^(debug|info|warn|error)$ ]] && [[ -n "${FUNCNAME[2]:-}" ]]; then
+        caller_idx=2
+        line_idx=1
+    fi
+
+    script="$(basename "${BASH_SOURCE[$caller_idx]}")"
+    line="${BASH_LINENO[$line_idx]}"
+    func="${FUNCNAME[$caller_idx]:-main}"
 
     # Align levels to 5 chars (DEBUG/INFO/WARN/ERROR)
     level_pad="$(printf '%-5s' "$level")"
@@ -90,6 +97,10 @@ error() { log "ERROR" "$1"; }
 
 # Main execution
 main() {
+    info "打印日志"
+    warn "打印日志"
+    error "打印日志"
+    debug "打印日志"
     info "打印日志"
     warn "打印日志"
     error "打印日志"
