@@ -157,7 +157,7 @@ instruction_interaction_sh() {
 		echo -e "命令行输入${gl_huang}k$gl_kjlan可快速启动脚本$gl_bai"
 		echo -e "$gl_kjlan------------------------$gl_bai"
 		echo -e "${gl_kjlan}1.   ${gl_bai}sshd服务"
-		echo -e "${gl_kjlan}2.   ${gl_bai}系统更新"
+		echo -e "${gl_kjlan}2.   ${gl_bai}开启http代理"
 		echo -e "$gl_kjlan------------------------$gl_bai"
 		echo -e "${gl_kjlan}00.  $gl_bai脚本更新"
 		echo -e "$gl_kjlan------------------------$gl_bai"
@@ -167,8 +167,9 @@ instruction_interaction_sh() {
 
 		case $choice in
 		1) init_sshd ;;
-		2) clear ; send_stats "系统更新" ; linux_update ;;
-		3) clear ; send_stats "系统清理" ; linux_clean ;;
+		2) proxyOnClash ;;
+		02) clear ; send_stats "系统更新" ; linux_update ;;
+		03) clear ; send_stats "系统清理" ; linux_clean ;;
 		00) kejilion_update ;;
 		0) clear ; exit ;;
 		*) echo "无效的输入!" ;;
