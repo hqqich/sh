@@ -179,12 +179,11 @@ instruction_interaction_sh() {
 }
 
 
-# Main execution
 main() {
 
 
     if [[ "${EUID}" -ne 0 ]]; then
-        log "这个脚本必须是root用户执行"
+        info "这个脚本必须是root用户执行"
         exit 1
     fi
 

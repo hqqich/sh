@@ -10,5 +10,6 @@ fork自：[kejilion/sh](https://github.com/kejilion/sh)
 ```shell
 
 bash <(curl -sL https://raw.githubusercontent.com/hqqich/sh/main/base.sh)
+bash <(curl -sL http://172.22.90.1:8888/base.sh)
 
 ```
