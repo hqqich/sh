@@ -100,26 +100,33 @@ break_end() {
 ############ sshd 服务 ###############
 #####################################
 install_ssh_server() {
-    log "安装sshd服务..."
-    apt-get update
+    info "安装sshd服务"
     apt-get install -y openssh-server
 }
 
 configure_sshd() {
-    log "配置sshd服务..."
-    # Enable root login with password
+    info "开启root登录"
     sed -i 's/#PermitRootLogin prohibit-password/PermitRootLogin yes/' "${SSHD_CONFIG}"
-    # Configure SFTP subsystem
+    info "开启sftp登录"
     sed -i 's/#Subsystem sftp/Subsystem sftp internal-sftp/' "${SSHD_CONFIG}"
-    # Change SSH port
+    info "设置端口：${SSH_PORT}"
     sed -i "s/#Port 22/Port ${SSH_PORT}/" "${SSHD_CONFIG}"
-    log "SSHD 配置完成. 端口为: ${SSH_PORT}"
 }
 
 set_root_password() {
-    log "Setting root password..."
     echo "root:${ROOT_PASSWORD}" | chpasswd
-    log "WARN" "Root password set to default value. Change this immediately!"
+    info "设置root密码成功：${ROOT_PASSWORD}"
+}
+
+init_sshd() {
+    if dpkg -s openssh-server >/dev/null 2>&1; then
+        info "openssh-server 已安装，跳过初始化。"
+        return 0
+    fi
+
+    install_ssh_server
+    configure_sshd
+    set_root_password
 }
 #####################################
 
@@ -159,7 +166,7 @@ instruction_interaction_sh() {
 		read -e -p "请输入你的选择: " choice
 
 		case $choice in
-		1) linux_info ;;
+		1) init_sshd ;;
 		2) clear ; send_stats "系统更新" ; linux_update ;;
 		3) clear ; send_stats "系统清理" ; linux_clean ;;
 		00) kejilion_update ;;
