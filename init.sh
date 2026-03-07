@@ -1,7 +1,7 @@
 #!/bin/bash
 
 sh_download() {
-    local script_path="$HOME/kejilion.sh"
+    local script_path="$HOME/sh/base.sh"
 
     # 检测国家/IPv6/IPv4
     local country=$(curl -s --max-time 1 ipinfo.io/country || echo "unknown")
