@@ -3,7 +3,7 @@
 sh_download() {
     mkdir "$HOME/tsinglink-script"
     local script_path="$HOME/tsinglink-script/base.sh"
-    local lan_url="http://172.22.90.8:5244/sh/base.sh"
+    local lan_url="http://172.22.90.1:5244/sh/base.sh"
 
     # LAN 可达时优先使用
     if curl -sS --head --max-time 1 "$lan_url" >/dev/null 2>&1; then
