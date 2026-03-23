@@ -12,7 +12,8 @@ fork自：[kejilion/sh](https://github.com/kejilion/sh)
 - [x-cmd](https://cn.x-cmd.com/)
 - [chsrc](https://chsrc.run/)
 - [timg](https://github.com/hzeller/timg/releases/download/v1.6.3/timg-v1.6.3-x86_64.AppImage)
-
+- [yazi](https://github.com/sxyazi/yazi)
+- []()
 
 ### 使用
 
@@ -22,6 +23,19 @@ bash <(curl -sL https://raw.githubusercontent.com/hqqich/sh/main/base.sh)
 bash <(curl -sL http://172.22.90.1:5244/sh/base.sh)
 
 ```
+
+```shell
+python3 -m http.server 8080
+
+# 这个需要安装
+python3 -m pip install --user uploadserver
+python3 -m uploadserver 8080
+# 指定token
+python3 -m uploadserver -t helloworld
+# 上传文件
+curl -v  http://127.0.0.1:8000/upload -F "files=@/tmp/test.txt;filename=test.txt"
+```
+
 
 ### 提交辅助脚本
 
