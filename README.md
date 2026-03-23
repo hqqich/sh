@@ -7,8 +7,12 @@ fork自：[kejilion/sh](https://github.com/kejilion/sh)
 
 ### 好用的工具
 
+
+
 - [x-cmd](https://cn.x-cmd.com/)
 - [chsrc](https://chsrc.run/)
+- [timg](https://github.com/hzeller/timg/releases/download/v1.6.3/timg-v1.6.3-x86_64.AppImage)
+
 
 ### 使用
 
