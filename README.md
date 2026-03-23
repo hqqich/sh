@@ -27,7 +27,7 @@ bash <(curl -sL http://172.22.90.1:5244/sh/base.sh)
 ```shell
 python3 -m http.server 8080
 
-# 这个需要安装
+# 这个需要安装   https://pypi.org/project/uploadserver/
 python3 -m pip install --user uploadserver
 python3 -m uploadserver 8080
 # 指定token
