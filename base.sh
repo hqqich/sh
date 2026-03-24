@@ -96,6 +96,8 @@ break_end() {
 
 
 
+
+
 #####################################
 ############ sshd 服务 ###############
 #####################################
@@ -222,5 +224,15 @@ main() {
 
 # 这确保了脚本仅在被直接执行时运行 main 逻辑，而在被 source 引用时仅加载函数定义，增强了模块化兼容性。
 if [[ "${BASH_SOURCE[0]}" == "${0}" ]]; then
+
+    sed -i '/^alias tss=/d' ~/.bashrc > /dev/null 2>&1
+    sed -i '/^alias tss=/d' ~/.profile > /dev/null 2>&1
+    sed -i '/^alias tss=/d' ~/.bash_profile > /dev/null 2>&1
+    cp -f ./tsinglink-sh-script.sh ~/tsinglink-sh-script.sh > /dev/null 2>&1
+    # tsinglink-sh-script  =>  tss
+    cp -f ~/tsinglink-sh-script.sh /usr/local/bin/tss > /dev/null 2>&1
+    ln -sf /usr/local/bin/tss /usr/bin/tss > /dev/null 2>&1
+
+
     main "$@"
 fi

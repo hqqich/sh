@@ -1,8 +1,7 @@
 #!/bin/bash
 
 sh_download() {
-    mkdir "$HOME/tsinglink-script"
-    local script_path="$HOME/tsinglink-script/base.sh"
+    local script_path="$HOME/tsinglink-sh-script.sh"
     local lan_url="http://172.22.90.1:5244/sh/base.sh"
 
     # LAN 可达时优先使用
