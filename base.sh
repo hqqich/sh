@@ -233,6 +233,5 @@ if [[ "${BASH_SOURCE[0]}" == "${0}" ]]; then
     cp -f ~/tsinglink-sh-script.sh /usr/local/bin/tss > /dev/null 2>&1
     ln -sf /usr/local/bin/tss /usr/bin/tss > /dev/null 2>&1
 
-
     main "$@"
 fi

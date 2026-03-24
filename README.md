@@ -1,19 +1,23 @@
-# 
+# script
 
 fork自：[kejilion/sh](https://github.com/kejilion/sh)
 
 从`科技lion`学习脚本开发
 
+### 工具
 
-### 好用的工具
-
-
-
-- [x-cmd](https://cn.x-cmd.com/)
-- [chsrc](https://chsrc.run/)
-- [timg](https://github.com/hzeller/timg/releases/download/v1.6.3/timg-v1.6.3-x86_64.AppImage)
-- [yazi](https://github.com/sxyazi/yazi)
-- []()
+| 工具                                                                                         | 下载地址 | 安装方式   |
+| -------------------------------------------------------------------------------------------- | -------- | ---------- |
+| [x-cmd](https://cn.x-cmd.com/)                                                               |          |            |
+| [chsrc](https://chsrc.run/)                                                                  |          |            |
+| [timg](https://github.com/hzeller/timg/releases/download/v1.6.3/timg-v1.6.3-x86_64.AppImage) |          |            |
+| [yazi](https://github.com/sxyazi/yazi)                                                       |          |            |
+| [glow](https://github.com/charmbracelet/glow)                                                |          | 可执行文件 |
+| [jq](https://github.com/jqlang/jq)                                                           |          | 可执行文件 |
+| [fish](https://fishshell.com/)                                                               |          | apt安装    |
+| []()                                                                                         |          |            |
+| []()                                                                                         |          |            |
+| []()                                                                                         |          |            |
 
 ### 使用
 
@@ -35,7 +39,6 @@ python3 -m uploadserver -t helloworld
 # 上传文件
 curl -v  http://127.0.0.1:8000/upload -F "files=@/tmp/test.txt;filename=test.txt"
 ```
-
 
 ### 提交辅助脚本
 
