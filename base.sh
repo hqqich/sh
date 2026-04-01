@@ -1,32 +1,19 @@
 #!/bin/bash
 
-set -o errexit
-set -o nounset
-set -o pipefail
+# set -o errexit # 当脚本中任意命令返回非零退出状态（表示执行失败）时，立即终止脚本运行，避免错误累积导致更严重的问题。
+# set -o nounset # 当脚本中使用未赋值/未定义的变量（称为“未绑定变量”，Unbound Variable）时，立即报错并退出，避免因变量拼写错误或遗漏初始化导致的隐性BUG。
+# set -o pipefail # 修改管道的退出状态计算规则：默认情况下，管道的退出状态是最后一个命令的状态；开启pipefail后，管道的退出状态是所有命令中第一个非零的状态（即只要有一个命令失败，整个管道视为失败）。
+# info() {
+#     echo "[INFO] $1"
+# }
 
 # Logging framework
 # Log format (logback-ish):
 # 2026-03-05 14:23:01.123 INFO  [base.sh] (line:42 func:main) message
-LOG_LEVEL="${LOG_LEVEL:-DEBUG}"   # DEBUG|INFO|WARN|ERROR
-NO_COLOR="${NO_COLOR:-false}"    # true disables color
-
-# Map levels to numbers for comparison
-declare -A _LOG_LEVEL_MAP=( [DEBUG]=10 [INFO]=20 [WARN]=30 [ERROR]=40 )
-
-_log_should_print() {
-    local level="${1:-INFO}"
-    local level_val="${_LOG_LEVEL_MAP[$level]:-20}"
-    local current_val="${_LOG_LEVEL_MAP[$LOG_LEVEL]:-10}"
-    (( level_val >= current_val ))
-}
 
 log() {
     local level="$1"
     local msg="$2"
-
-    if ! _log_should_print "$level"; then
-        return 0
-    fi
 
     local ts
     local script
@@ -54,7 +41,7 @@ log() {
     # Align levels to 5 chars
     printf -v level_pad '%-5s' "$level"
 
-    if [[ -t 1 && "$NO_COLOR" != "true" ]]; then
+    if [[ -t 1 ]]; then
         case "$level" in
             DEBUG) color=$'\033[36m' ;; # cyan
             INFO)  color=$'\033[32m' ;; # green
@@ -221,6 +208,11 @@ main() {
     fi
 
 }
+
+debug "打"
+info "印"
+warn "日"
+error "志"
 
 # 这确保了脚本仅在被直接执行时运行 main 逻辑，而在被 source 引用时仅加载函数定义，增强了模块化兼容性。
 if [[ "${BASH_SOURCE[0]}" == "${0}" ]]; then

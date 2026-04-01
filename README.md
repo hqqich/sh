@@ -15,6 +15,9 @@ fork自：[kejilion/sh](https://github.com/kejilion/sh)
 | [glow](https://github.com/charmbracelet/glow)                                                |          | 可执行文件 |
 | [jq](https://github.com/jqlang/jq)                                                           |          | 可执行文件 |
 | [fish](https://fishshell.com/)                                                               |          | apt安装    |
+| [btop]()                                                                                         |          |            |
+| [ctop]()                                                                                         |          |            |
+| [dufs]()                                                                                         |          |            |
 | []()                                                                                         |          |            |
 | []()                                                                                         |          |            |
 | []()                                                                                         |          |            |
