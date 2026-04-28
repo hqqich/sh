@@ -88,23 +88,72 @@ break_end() {
 #####################################
 ############ sshd 服务 ###############
 #####################################
+readonly SSHD_CONFIG="/etc/ssh/sshd_config"
+
 install_ssh_server() {
     info "安装sshd服务"
+    apt-get update
     apt-get install -y openssh-server
 }
 
 configure_sshd() {
+    local ssh_port=""
+
+    while true; do
+        read -r -p "请输入 sshd 端口: " ssh_port
+
+        if [[ -z "${ssh_port}" ]]; then
+            warn "端口不能为空，请重新输入。"
+            continue
+        fi
+
+        if [[ ! "${ssh_port}" =~ ^[0-9]+$ ]]; then
+            warn "端口必须是数字，请重新输入。"
+            continue
+        fi
+
+        if (( ssh_port < 1 || ssh_port > 65535 )); then
+            warn "端口必须在 1 到 65535 之间，请重新输入。"
+            continue
+        fi
+
+        break
+    done
+
     info "开启root登录"
     sed -i 's/#PermitRootLogin prohibit-password/PermitRootLogin yes/' "${SSHD_CONFIG}"
     info "开启sftp登录"
     sed -i 's/#Subsystem sftp/Subsystem sftp internal-sftp/' "${SSHD_CONFIG}"
-    info "设置端口：${SSH_PORT}"
-    sed -i "s/#Port 22/Port ${SSH_PORT}/" "${SSHD_CONFIG}"
+    info "设置端口：${ssh_port}"
+    sed -i "s/#Port 22/Port ${ssh_port}/" "${SSHD_CONFIG}"
 }
 
 set_root_password() {
-    echo "root:${ROOT_PASSWORD}" | chpasswd
-    info "设置root密码成功：${ROOT_PASSWORD}"
+    local root_password=""
+    local confirm_password=""
+
+    while true; do
+        read -r -s -p "请输入 root 密码: " root_password
+        echo ""
+
+        if [[ -z "${root_password}" ]]; then
+            warn "密码不能为空，请重新输入。"
+            continue
+        fi
+
+        read -r -s -p "请再次输入 root 密码: " confirm_password
+        echo ""
+
+        if [[ "${root_password}" != "${confirm_password}" ]]; then
+            warn "两次输入的密码不一致，请重新输入。"
+            continue
+        fi
+
+        break
+    done
+
+    echo "root:${root_password}" | chpasswd
+    info "设置 root 密码成功。"
 }
 
 init_sshd() {
@@ -116,6 +165,8 @@ init_sshd() {
     install_ssh_server
     configure_sshd
     set_root_password
+
+    info "启动命令： nohup /usr/sbin/sshd -D &"
 }
 #####################################
 
@@ -163,7 +214,7 @@ instruction_interaction_sh() {
 		echo " +-+-+-+-+-+-+-+-+-+-+-+-+"
 		echo " |T|S|I|N|G|L|I|N|K|.|S|H|"
 		echo " +-+-+-+-+-+-+-+-+-+-+-+-+"
-		echo -e "命令行输入${gl_huang}k$gl_kjlan可快速启动脚本$gl_bai"
+		echo -e "命令行输入${gl_huang}tss$gl_kjlan可快速启动脚本$gl_bai"
 		echo -e "$gl_kjlan------------------------$gl_bai"
 		echo -e "${gl_kjlan}1.   ${gl_bai}sshd服务"
 		echo -e "${gl_kjlan}2.   ${gl_bai}开启http代理"
@@ -227,6 +278,7 @@ info "印"
 warn "日"
 error "志"
 
+# docker run --rm --network=host -d --runtime=nvidia -v /mnt/aap:/at_in --entrypoint "tail" --name database database:6.1.1 -f /dev/null
 # 这确保了脚本仅在被直接执行时运行 main 逻辑，而在被 source 引用时仅加载函数定义，增强了模块化兼容性。
 if [[ "${BASH_SOURCE[0]}" == "${0}" ]]; then
 
