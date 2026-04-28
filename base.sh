@@ -168,6 +168,27 @@ init_sshd() {
 
     info "启动命令： nohup /usr/sbin/sshd -D &"
 }
+
+# 1. 生成对称key:   ssh-keygen -t ed25519
+# 2. 将 .pub 内容复制到 authorized_keys 文件中，这是公钥
+set_private_key_login() {
+    info "设置私钥登录"
+    # cat id_ed25519.pub >> authorized_keys
+    # 修改sshd的配置文件，允许私钥登录
+    # 增加配置
+    # PubkeyAuthentication yes
+    # AuthorizedKeysFile .ssh/authorized_keys
+    # 私钥一定要是 600 的， chmod 600 ./key
+    # 
+    # 
+    # ssh-ed25519                        AAAAC3Nzxxxxxxk3P55LykqrR     root@host
+    # 密钥类型（Ed25519，现代、安全、推荐）   Base64 编码的公钥内容           注释（通常是生成密钥时的用户名和主机名）
+    # 
+    # 
+    # RSA       (全平台通用)           ssh-keygen -t rsa -b 4096
+    # Ed25519   (OpenSSH 6.5+)       ssh-keygen -t ed25519
+    # ECDSA     (依赖系统随机源)       ssh-keygen -t ecdsa
+}
 #####################################
 
 
@@ -205,7 +226,7 @@ installUv() {
 #####################################
 installDevTool() {
     info "准备安装：vim git curl wget unzip build-essential zip"
-    apt-get install -y vim git curl wget unzip build-essential zip
+    apt-get install -y vim git lrzsz curl wget unzip build-essential zip
 }
 #####################################
 
