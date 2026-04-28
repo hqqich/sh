@@ -18,8 +18,8 @@ fork自：[kejilion/sh](https://github.com/kejilion/sh)
 | [btop]()                                                                                         |          |            |
 | [ctop]()                                                                                         |          |            |
 | [dufs]()                                                                                         |          |            |
-| []()                                                                                         |          |            |
-| []()                                                                                         |          |            |
+| [somo](https://github.com/theopfr/somo)                                                     |          |   deb安装         |
+| [asciinema](https://docs.asciinema.org/getting-started/)                               |          |            |
 | []()                                                                                         |          |            |
 
 
