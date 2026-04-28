@@ -189,10 +189,23 @@ proxyOnClash() {
 ############ python中的uv ############
 #####################################
 installUv() {
+    # https://uv.oaix.tech/
     # https://uv.doczh.com/getting-started/installation/
     # 下载安装uv
     curl -LsSf https://astral.sh/uv/install.sh | sh
     uv -V
+}
+#####################################
+
+
+
+
+#####################################
+############ 开发者工具 ############
+#####################################
+installDevTool() {
+    info "准备安装：vim git curl wget unzip build-essential zip"
+    apt-get install -y vim git curl wget unzip build-essential zip
 }
 #####################################
 
@@ -218,6 +231,8 @@ instruction_interaction_sh() {
 		echo -e "$gl_kjlan------------------------$gl_bai"
 		echo -e "${gl_kjlan}1.   ${gl_bai}sshd服务"
 		echo -e "${gl_kjlan}2.   ${gl_bai}开启http代理"
+		echo -e "${gl_kjlan}3.   ${gl_bai}安装uv"
+		echo -e "${gl_kjlan}4.   ${gl_bai}安装dev-tool"
 		echo -e "$gl_kjlan------------------------$gl_bai"
 		echo -e "${gl_kjlan}00.  $gl_bai脚本更新"
 		echo -e "$gl_kjlan------------------------$gl_bai"
@@ -228,6 +243,8 @@ instruction_interaction_sh() {
 		case $choice in
 		1) init_sshd ;;
 		2) proxyOnClash ;;
+		3) installUv ;;
+		4) installDevTool ;;
 		02) clear ; send_stats "系统更新" ; linux_update ;;
 		03) clear ; send_stats "系统清理" ; linux_clean ;;
 		00) kejilion_update ;;
