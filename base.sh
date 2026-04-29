@@ -197,9 +197,12 @@ init_sshd() {
 
     install_ssh_server
     configure_sshd
+    set_private_key_login
     set_root_password
 
+    info "===================== 安装成功 ======================"
     info "启动命令： nohup /usr/sbin/sshd -D &"
+    info "==================================================="
 }
 #####################################
 
