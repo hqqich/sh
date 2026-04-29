@@ -156,23 +156,22 @@ set_root_password() {
     info "设置 root 密码成功。"
 }
 
-init_sshd() {
-    if dpkg -s openssh-server >/dev/null 2>&1; then
-        info "openssh-server 已安装，跳过初始化。"
-        return 0
-    fi
 
-    install_ssh_server
-    configure_sshd
-    set_root_password
-
-    info "启动命令： nohup /usr/sbin/sshd -D &"
-}
 
 # 1. 生成对称key:   ssh-keygen -t ed25519
 # 2. 将 .pub 内容复制到 authorized_keys 文件中，这是公钥
 set_private_key_login() {
     info "设置私钥登录"
+
+    ssh-keygen -t ed25519
+
+    # cat /root/.ssh/id_ed25519.pub >> /root/.ssh/authorized_keys
+    echo "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIM8GrZ5X0Gh9BNqhA47wpQ4a5YxPRb8Ccfr2KsR2d+2Q root@docker" >> ~/.ssh/authorized_keys
+
+    sed -i 's/#PubkeyAuthentication yes/PubkeyAuthentication yes/' "${SSHD_CONFIG}"
+
+    sed -i '/AuthorizedKeysFile/s/^#//' "${SSHD_CONFIG}"
+
     # cat id_ed25519.pub >> authorized_keys
     # 修改sshd的配置文件，允许私钥登录
     # 增加配置
@@ -188,6 +187,19 @@ set_private_key_login() {
     # RSA       (全平台通用)           ssh-keygen -t rsa -b 4096
     # Ed25519   (OpenSSH 6.5+)       ssh-keygen -t ed25519
     # ECDSA     (依赖系统随机源)       ssh-keygen -t ecdsa
+}
+
+init_sshd() {
+    if dpkg -s openssh-server >/dev/null 2>&1; then
+        info "openssh-server 已安装，跳过初始化。"
+        return 0
+    fi
+
+    install_ssh_server
+    configure_sshd
+    set_root_password
+
+    info "启动命令： nohup /usr/sbin/sshd -D &"
 }
 #####################################
 
@@ -225,8 +237,8 @@ installUv() {
 ############ 开发者工具 ############
 #####################################
 installDevTool() {
-    info "准备安装：vim git curl wget unzip build-essential zip"
-    apt-get install -y vim git lrzsz curl wget unzip build-essential zip
+    info "准备安装：vim git lrzsz curl wget unzip build-essential zip iputils-ping net-tools sshpass xz-utils"
+    apt-get install -y vim git lrzsz curl wget unzip build-essential zip iputils-ping net-tools sshpass xz-utils
 }
 #####################################
 
