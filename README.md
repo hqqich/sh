@@ -34,10 +34,10 @@ fork自：[kejilion/sh](https://github.com/kejilion/sh)
 ### 使用
 
 ```shell
-
 bash <(curl -sL https://raw.githubusercontent.com/hqqich/sh/main/base.sh)
+bash <(curl -sL https://cdn.jsdelivr.net/gh/hqqich/sh@main/base.sh)
 bash <(curl -sL http://172.22.90.1:5244/sh/base.sh)
-
+bash <(curl -sL http://172.22.90.1:8080/base.sh)
 ```
 
 ```shell
