@@ -247,6 +247,58 @@ installDevTool() {
 
 
 
+
+
+#####################################
+############ 生成ssl证书 ############
+#####################################
+createSsl() {
+    local cert_dir=""
+    local cert_name=""
+    local key_path=""
+    local crt_path=""
+
+    info "准备使用openssl生成证书"
+
+    while true; do
+        read -r -p "请输入证书保存路径: " cert_dir
+        if [[ -z "${cert_dir}" ]]; then
+            warn "证书路径不能为空，请重新输入。"
+            continue
+        fi
+        break
+    done
+
+    while true; do
+        read -r -p "请输入证书名称: " cert_name
+        if [[ -z "${cert_name}" ]]; then
+            warn "证书名称不能为空，请重新输入。"
+            continue
+        fi
+        break
+    done
+
+    if [[ "${cert_dir}" != "/" ]]; then
+        cert_dir="${cert_dir%/}"
+    fi
+
+    mkdir -p "${cert_dir}"
+
+    key_path="${cert_dir}/${cert_name}.key"
+    crt_path="${cert_dir}/${cert_name}.crt"
+
+    info "证书私钥路径: ${key_path}"
+    info "证书文件路径: ${crt_path}"
+
+    openssl req -x509 -nodes -days 365 -newkey rsa:2048 \
+        -keyout "${key_path}" \
+        -out "${crt_path}"
+}
+#####################################
+
+
+
+
 #####################################
 ############ 安装 ############
 #####################################
