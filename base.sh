@@ -252,6 +252,32 @@ installDevTool() {
 #####################################
 ############ 生成ssl证书 ############
 #####################################
+# 生成 2048 位 RSA 私钥和有效期 365 天的证书
+# 一直按 enter 就行
+# 或者：
+# [req]
+# default_bits = 2048
+# prompt = no
+# default_md = sha256
+# distinguished_name = dn
+# x509_extensions = v3_req
+#
+# [dn]
+# C = CN
+# ST = Beijing
+# L = Beijing
+# O = YourOrg
+# OU = YourDept
+# CN = ts36.hqqich.rest
+#
+# [v3_req]
+# keyUsage = keyEncipherment, dataEncipherment
+# extendedKeyUsage = serverAuth
+# subjectAltName = @alt_names
+#
+# [alt_names]
+# DNS.1 = ts36.hqqich.rest
+# DNS.2 = *.ts36.hqqich.rest
 createSsl() {
     local cert_dir=""
     local cert_name=""
