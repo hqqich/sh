@@ -1,12 +1,543 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+<!doctype html>
+<html lang="zh-CN">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Shell Study</title>
+        <style>
+            :root {
+                --bg: #f4efe6;
+                --bg-deep: #e7ddcd;
+                --panel: rgba(255, 250, 243, 0.8);
+                --panel-strong: #fffaf2;
+                --text: #1f2933;
+                --muted: #52606d;
+                --accent: #b24c2d;
+                --accent-soft: #e7a37c;
+                --line: rgba(31, 41, 51, 0.12);
+                --shadow: 0 24px 60px rgba(57, 41, 24, 0.16);
+                --radius: 24px;
+            }
 
-<p>hello</p>
+            * {
+                box-sizing: border-box;
+            }
 
-</body>
+            body {
+                margin: 0;
+                min-height: 100vh;
+                font-family:
+                    "Avenir Next", "Segoe UI", "PingFang SC",
+                    "Hiragino Sans GB", sans-serif;
+                color: var(--text);
+                background:
+                    radial-gradient(
+                        circle at top left,
+                        rgba(178, 76, 45, 0.18),
+                        transparent 28%
+                    ),
+                    radial-gradient(
+                        circle at right 20%,
+                        rgba(69, 117, 146, 0.14),
+                        transparent 26%
+                    ),
+                    linear-gradient(
+                        160deg,
+                        var(--bg) 0%,
+                        #f8f2e9 52%,
+                        var(--bg-deep) 100%
+                    );
+            }
+
+            body::before {
+                content: "";
+                position: fixed;
+                inset: 0;
+                pointer-events: none;
+                opacity: 0.35;
+                background-image:
+                    linear-gradient(
+                        rgba(255, 255, 255, 0.08) 1px,
+                        transparent 1px
+                    ),
+                    linear-gradient(
+                        90deg,
+                        rgba(255, 255, 255, 0.08) 1px,
+                        transparent 1px
+                    );
+                background-size: 34px 34px;
+                mask-image: linear-gradient(
+                    to bottom,
+                    rgba(0, 0, 0, 0.75),
+                    transparent
+                );
+            }
+
+            .page {
+                width: min(1120px, calc(100% - 32px));
+                margin: 0 auto;
+                padding: 32px 0 56px;
+            }
+
+            .hero {
+                position: relative;
+                overflow: hidden;
+                border: 1px solid rgba(255, 255, 255, 0.5);
+                border-radius: calc(var(--radius) + 8px);
+                padding: 28px;
+                background: linear-gradient(
+                    135deg,
+                    rgba(255, 250, 243, 0.9),
+                    rgba(255, 244, 233, 0.72)
+                );
+                box-shadow: var(--shadow);
+                backdrop-filter: blur(16px);
+            }
+
+            .hero::after {
+                content: "";
+                position: absolute;
+                top: -80px;
+                right: -60px;
+                width: 220px;
+                height: 220px;
+                border-radius: 50%;
+                background: radial-gradient(
+                    circle,
+                    rgba(178, 76, 45, 0.22),
+                    transparent 68%
+                );
+            }
+
+            .topbar {
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                gap: 16px;
+                margin-bottom: 48px;
+            }
+
+            .brand {
+                display: flex;
+                align-items: center;
+                gap: 14px;
+            }
+
+            .brand-mark {
+                width: 48px;
+                height: 48px;
+                display: grid;
+                place-items: center;
+                border-radius: 16px;
+                background: #1f2933;
+                color: #fffaf2;
+                font-family: "SFMono-Regular", "Menlo", "Consolas", monospace;
+                font-size: 20px;
+                box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.08);
+            }
+
+            .brand-copy strong {
+                display: block;
+                font-size: 1rem;
+                letter-spacing: 0.08em;
+                text-transform: uppercase;
+            }
+
+            .brand-copy span {
+                color: var(--muted);
+                font-size: 0.95rem;
+            }
+
+            .badge {
+                display: inline-flex;
+                align-items: center;
+                gap: 8px;
+                padding: 10px 14px;
+                border-radius: 999px;
+                background: rgba(31, 41, 51, 0.05);
+                color: var(--muted);
+                font-size: 0.92rem;
+            }
+
+            .hero-grid {
+                display: grid;
+                grid-template-columns: minmax(0, 1.3fr) minmax(280px, 0.9fr);
+                gap: 28px;
+                align-items: center;
+            }
+
+            .hero-copy h1 {
+                margin: 0 0 16px;
+                font-family: "Georgia", "Times New Roman", serif;
+                font-size: clamp(2.8rem, 7vw, 5.5rem);
+                line-height: 0.94;
+                letter-spacing: -0.05em;
+            }
+
+            .hero-copy p {
+                max-width: 680px;
+                margin: 0 0 24px;
+                color: var(--muted);
+                font-size: 1.06rem;
+                line-height: 1.75;
+            }
+
+            .actions {
+                display: flex;
+                flex-wrap: wrap;
+                gap: 12px;
+            }
+
+            .button {
+                display: inline-flex;
+                align-items: center;
+                justify-content: center;
+                min-width: 150px;
+                padding: 14px 18px;
+                border-radius: 14px;
+                border: 1px solid transparent;
+                text-decoration: none;
+                font-weight: 600;
+                transition:
+                    transform 180ms ease,
+                    box-shadow 180ms ease,
+                    background 180ms ease;
+            }
+
+            .button:hover {
+                transform: translateY(-2px);
+            }
+
+            .button-primary {
+                background: var(--accent);
+                color: #fffaf2;
+                box-shadow: 0 12px 24px rgba(178, 76, 45, 0.24);
+            }
+
+            .button-secondary {
+                border-color: rgba(31, 41, 51, 0.12);
+                color: var(--text);
+                background: rgba(255, 255, 255, 0.46);
+            }
+
+            .terminal {
+                position: relative;
+                border-radius: var(--radius);
+                padding: 18px;
+                background: #1a202c;
+                color: #d9e2ec;
+                box-shadow: 0 22px 46px rgba(19, 27, 37, 0.28);
+                transform: rotate(1.5deg);
+            }
+
+            .terminal::before {
+                content: "";
+                position: absolute;
+                inset: 0;
+                border-radius: inherit;
+                border: 1px solid rgba(255, 255, 255, 0.08);
+                pointer-events: none;
+            }
+
+            .terminal-top {
+                display: flex;
+                gap: 8px;
+                margin-bottom: 14px;
+            }
+
+            .terminal-top span {
+                width: 10px;
+                height: 10px;
+                border-radius: 50%;
+                background: #ef8354;
+            }
+
+            .terminal-top span:nth-child(2) {
+                background: #f6bd60;
+            }
+
+            .terminal-top span:nth-child(3) {
+                background: #84a59d;
+            }
+
+            .terminal pre {
+                margin: 0;
+                overflow: auto;
+                font-family: "SFMono-Regular", "Menlo", "Consolas", monospace;
+                font-size: 0.95rem;
+                line-height: 1.8;
+            }
+
+            .terminal .prompt {
+                color: #7bdff2;
+            }
+
+            .terminal .path {
+                color: #f7a072;
+            }
+
+            .terminal .ok {
+                color: #b8f2e6;
+            }
+
+            .metrics,
+            .cards {
+                display: grid;
+                gap: 18px;
+                margin-top: 22px;
+            }
+
+            .metrics {
+                grid-template-columns: repeat(3, minmax(0, 1fr));
+            }
+
+            .metric,
+            .card {
+                border-radius: var(--radius);
+                border: 1px solid var(--line);
+                background: var(--panel);
+                backdrop-filter: blur(14px);
+                box-shadow: 0 12px 28px rgba(66, 48, 27, 0.07);
+            }
+
+            .metric {
+                padding: 20px;
+            }
+
+            .metric strong {
+                display: block;
+                margin-bottom: 8px;
+                font-size: 1.65rem;
+                font-family: "Georgia", "Times New Roman", serif;
+            }
+
+            .metric span,
+            .card p {
+                color: var(--muted);
+                line-height: 1.7;
+            }
+
+            .cards {
+                grid-template-columns: repeat(3, minmax(0, 1fr));
+            }
+
+            .card {
+                padding: 24px;
+            }
+
+            .card h2 {
+                margin: 0 0 12px;
+                font-size: 1.15rem;
+            }
+
+            .tag-row {
+                display: flex;
+                flex-wrap: wrap;
+                gap: 10px;
+                margin-top: 18px;
+            }
+
+            .tag {
+                padding: 8px 12px;
+                border-radius: 999px;
+                background: rgba(178, 76, 45, 0.08);
+                color: var(--accent);
+                font-size: 0.9rem;
+            }
+
+            .footer {
+                display: flex;
+                justify-content: space-between;
+                gap: 12px;
+                margin-top: 22px;
+                padding: 0 4px;
+                color: var(--muted);
+                font-size: 0.95rem;
+            }
+
+            .reveal {
+                opacity: 0;
+                transform: translateY(18px);
+                animation: rise 680ms ease forwards;
+            }
+
+            .delay-1 {
+                animation-delay: 90ms;
+            }
+
+            .delay-2 {
+                animation-delay: 180ms;
+            }
+
+            .delay-3 {
+                animation-delay: 270ms;
+            }
+
+            @keyframes rise {
+                to {
+                    opacity: 1;
+                    transform: translateY(0);
+                }
+            }
+
+            @media (max-width: 920px) {
+                .hero-grid,
+                .cards,
+                .metrics {
+                    grid-template-columns: 1fr;
+                }
+
+                .terminal {
+                    transform: none;
+                }
+
+                .topbar,
+                .footer {
+                    flex-direction: column;
+                    align-items: flex-start;
+                }
+            }
+
+            @media (max-width: 640px) {
+                .page {
+                    width: min(100% - 20px, 1120px);
+                    padding-top: 18px;
+                }
+
+                .hero {
+                    padding: 20px;
+                }
+
+                .hero-copy h1 {
+                    font-size: clamp(2.4rem, 18vw, 4rem);
+                }
+
+                .button {
+                    width: 100%;
+                }
+            }
+        </style>
+    </head>
+    <body>
+        <main class="page">
+            <section class="hero">
+                <div class="topbar reveal">
+                    <div class="brand">
+                        <div class="brand-mark">&gt;_</div>
+                        <div class="brand-copy">
+                            <strong>Shell Study</strong>
+                            <span
+                                >面向服务器初始化与日常运维的 Bash
+                                脚本集合</span
+                            >
+                        </div>
+                    </div>
+                    <div class="badge">Bash / Ops / Interactive Setup</div>
+                </div>
+
+                <div class="hero-grid">
+                    <div class="hero-copy reveal delay-1">
+                        <h1>让脚本不止能跑，还要清晰、可靠、可复用。</h1>
+                        <p>
+                            这个页面把原来的占位内容升级成了一个更完整的展示页，视觉方向偏向“终端
+                            + 运维面板”， 适合和当前仓库的 Bash
+                            工具集主题保持一致。整体使用暖色纸面背景和深色终端卡片，既不单调，也更容易承载后续内容扩展。
+                        </p>
+                        <div class="actions">
+                            <a class="button button-primary" href="#modules"
+                                >查看模块</a
+                            >
+                            <a class="button button-secondary" href="#workflow"
+                                >设计思路</a
+                            >
+                        </div>
+                    </div>
+
+                    <div class="terminal reveal delay-2" id="workflow">
+                        <div class="terminal-top">
+                            <span></span>
+                            <span></span>
+                            <span></span>
+                        </div>
+                        <pre><span class="prompt">$</span> bash <span class="path">base.sh</span>
+<span class="ok">[info]</span> initialize shell environment
+<span class="ok">[info]</span> load common utils from utils.sh
+<span class="ok">[info]</span> choose deploy or init workflow
+<span class="prompt">$</span> bash <span class="path">main.sh</span>
+<span class="ok">[done]</span> example flow executed successfully</pre>
+                    </div>
+                </div>
+            </section>
+
+            <section class="metrics" aria-label="项目特点">
+                <article class="metric reveal delay-1">
+                    <strong>交互式</strong>
+                    <span
+                        >把高风险操作拆成更容易确认和回滚的步骤，适合初始化场景。</span
+                    >
+                </article>
+                <article class="metric reveal delay-2">
+                    <strong>模块化</strong>
+                    <span
+                        >`base.sh`、`utils.sh`、`init.sh`
+                        与部署脚本职责更清晰。</span
+                    >
+                </article>
+                <article class="metric reveal delay-3">
+                    <strong>可维护</strong>
+                    <span
+                        >页面结构与视觉组件已经准备好，后续可以直接继续补充文档内容。</span
+                    >
+                </article>
+            </section>
+
+            <section class="cards" id="modules">
+                <article class="card reveal delay-1">
+                    <h2>核心脚本</h2>
+                    <p>
+                        以 `base.sh` 为核心入口，配合 `utils.sh`
+                        提供日志与通用函数，适合承载交互式初始化流程。
+                    </p>
+                    <div class="tag-row">
+                        <span class="tag">base.sh</span>
+                        <span class="tag">utils.sh</span>
+                        <span class="tag">main.sh</span>
+                    </div>
+                </article>
+
+                <article class="card reveal delay-2">
+                    <h2>初始化与部署</h2>
+                    <p>
+                        初始化逻辑与部署类脚本分开摆放，避免一个入口承担太多职责，也方便逐步抽象配置。
+                    </p>
+                    <div class="tag-row">
+                        <span class="tag">init.sh</span>
+                        <span class="tag">deploy-server/</span>
+                        <span class="tag">安全优先</span>
+                    </div>
+                </article>
+
+                <article class="card reveal delay-3">
+                    <h2>后续扩展</h2>
+                    <p>
+                        目前是纯静态页面，不依赖构建工具。你后面要补
+                        README、命令说明或脚本截图，都可以直接继续加。
+                    </p>
+                    <div class="tag-row">
+                        <span class="tag">纯 HTML</span>
+                        <span class="tag">响应式</span>
+                        <span class="tag">零依赖</span>
+                    </div>
+                </article>
+            </section>
+
+            <footer class="footer reveal delay-3">
+                <span>Shell Study / HTML landing page</span>
+                <span
+                    >Clean structure. Terminal character. Ready for
+                    extension.</span
+                >
+            </footer>
+        </main>
+    </body>
 </html>
