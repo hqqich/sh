@@ -30,6 +30,13 @@ fork自：[kejilion/sh](https://github.com/kejilion/sh)
 | [lsd](https://github.com/lsd-rs/lsd)                                                               |          |            |
 
 
+### 文件处理工具
+
+- scp
+- rsync
+- sshpass
+
+
 
 ### 使用
 

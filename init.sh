@@ -1,5 +1,7 @@
 #!/bin/bash
 
+
+# 这个脚本负责下载 base.sh 并执行它，支持 LAN 优先和根据国家/IP 选择下载源。
 sh_download() {
     local script_path="$HOME/tsinglink-sh-script.sh"
     local lan_url="http://172.22.90.1:5244/sh/base.sh"
