@@ -247,6 +247,24 @@ installDevTool() {
 
 
 
+#####################################
+############ vnc ############
+#####################################
+# http://172.22.90.3:8090/pages/viewpage.action?pageId=29392936
+dockerInstallVNC() {
+    apt-get update
+
+    apt-get install -y xfce4 xfce4-goodies tightvncserver dbus-x11 ttf-wqy-zenhei
+
+    # 下载完之后
+    # export USER=your_username
+    # vncserver :1
+
+}
+#####################################
+
+
+
 
 
 #####################################
@@ -347,6 +365,7 @@ instruction_interaction_sh() {
 		echo -e "${gl_kjlan}2.   ${gl_bai}开启http代理"
 		echo -e "${gl_kjlan}3.   ${gl_bai}安装uv"
 		echo -e "${gl_kjlan}4.   ${gl_bai}安装dev-tool"
+		echo -e "${gl_kjlan}5.   ${gl_bai}docker内安装vnc"
 		echo -e "$gl_kjlan------------------------$gl_bai"
 		echo -e "${gl_kjlan}00.  $gl_bai脚本更新"
 		echo -e "$gl_kjlan------------------------$gl_bai"
@@ -359,6 +378,7 @@ instruction_interaction_sh() {
 		2) proxyOnClash ;;
 		3) installUv ;;
 		4) installDevTool ;;
+		5) dockerInstallVNC ;;
 		02) clear ; send_stats "系统更新" ; linux_update ;;
 		03) clear ; send_stats "系统清理" ; linux_clean ;;
 		00) kejilion_update ;;

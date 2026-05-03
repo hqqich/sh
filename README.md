@@ -29,6 +29,12 @@ fork自：[kejilion/sh](https://github.com/kejilion/sh)
 | -------------------------------------------------------------------------------------------- | -------- | ---------- |
 | [lsd](https://github.com/lsd-rs/lsd)                                                               |          |            |
 
+### 代理
+
+- [proxychains](https://github.com/rofl0r/proxychains-ng)
+- [proxychains4](https://github.com/rofl0r/proxychains-ng)
+- [proxychains-ng](https://github.com/rofl0r/proxychains-ng)
+- [socat]()
 
 ### 文件处理工具
 
