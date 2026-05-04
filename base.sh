@@ -256,9 +256,13 @@ dockerInstallVNC() {
 
     apt-get install -y xfce4 xfce4-goodies tightvncserver dbus-x11 ttf-wqy-zenhei
 
+    # 第二次启动需要删除文件
+    rm -f /tmp/.X1-lock & rm -f /tmp/.X11-unix/X1
+
     # 下载完之后
-    # export USER=your_username
+    # export USER=root
     # vncserver :1
+
 
 }
 #####################################
