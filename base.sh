@@ -264,6 +264,17 @@ dockerInstallVNC() {
     # vncserver :1
 
 
+    # 安装novnc处理
+    apt-get install -y novnc websockify
+    # 启动
+    websockify --web=/usr/share/novnc/ 6080 localhost:5901
+    # 或者从源码安装
+    # git clone https://github.com/novnc/noVNC.git
+    # cd noVNC
+    #  ./utils/novnc_proxy --vnc localhost:5901 --listen 6080
+
+
+
 }
 #####################################
 

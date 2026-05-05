@@ -29,6 +29,23 @@ fork自：[kejilion/sh](https://github.com/kejilion/sh)
 | -------------------------------------------------------------------------------------------- | -------- | ---------- |
 | [lsd](https://github.com/lsd-rs/lsd)                                                               |          |            |
 
+
+### 二进制查看
+
+
+- binsider
+- hexyl
+- hevi
+- bed
+- hexabyte
+- hexpatch
+
+### 文件管理
+
+- [superfile](https://github.com/yorukot/superfile)
+- [yazi](https://github.com/sxyazi/yazi)
+- [ranger](https://github.com/ranger/ranger)
+
 ### 代理
 
 - [proxychains](https://github.com/rofl0r/proxychains-ng)
