@@ -63,14 +63,14 @@ error() { log "ERROR" "$1"; }
 
 
 
-gl_hui='\e[37m'
-gl_hong='\033[31m'
+#gl_hui='\e[37m'
+#gl_hong='\033[31m'
 gl_lv='\033[32m'
 gl_huang='\033[33m'
-gl_lan='\033[34m'
+#gl_lan='\033[34m'
 gl_bai='\033[0m'
-gl_zi='\033[35m'
-gl_kjlan='\033[96m'
+#gl_zi='\033[35m'
+gl_lan='\033[96m'
 
 
 break_end() {
@@ -359,22 +359,22 @@ createSsl() {
 instruction_interaction_sh() {
 	while true; do
 		clear
-		echo -e "$gl_kjlan"
+		echo -e "$gl_lan"
 		echo " +-+-+-+-+-+-+-+-+-+-+-+-+"
 		echo " |T|S|I|N|G|L|I|N|K|.|S|H|"
 		echo " +-+-+-+-+-+-+-+-+-+-+-+-+"
-		echo -e "命令行输入${gl_huang}tss$gl_kjlan可快速启动脚本$gl_bai"
-		echo -e "$gl_kjlan------------------------$gl_bai"
-		echo -e "${gl_kjlan}1.   ${gl_bai}sshd服务"
-		echo -e "${gl_kjlan}2.   ${gl_bai}开启http代理"
-		echo -e "${gl_kjlan}3.   ${gl_bai}安装uv"
-		echo -e "${gl_kjlan}4.   ${gl_bai}安装dev-tool"
-		echo -e "${gl_kjlan}5.   ${gl_bai}docker内安装vnc"
-		echo -e "$gl_kjlan------------------------$gl_bai"
-		echo -e "${gl_kjlan}00.  $gl_bai脚本更新"
-		echo -e "$gl_kjlan------------------------$gl_bai"
-		echo -e "${gl_kjlan}0.   $gl_bai退出脚本"
-		echo -e "$gl_kjlan------------------------$gl_bai"
+		echo -e "命令行输入${gl_huang}tss$gl_lan可快速启动脚本$gl_bai"
+		echo -e "$gl_lan------------------------$gl_bai"
+		echo -e "${gl_lan}1.   ${gl_bai}sshd服务"
+		echo -e "${gl_lan}2.   ${gl_bai}开启http代理"
+		echo -e "${gl_lan}3.   ${gl_bai}安装uv"
+		echo -e "${gl_lan}4.   ${gl_bai}安装dev-tool"
+		echo -e "${gl_lan}5.   ${gl_bai}docker内安装vnc"
+		echo -e "$gl_lan------------------------$gl_bai"
+		echo -e "${gl_lan}00.  $gl_bai脚本更新"
+		echo -e "$gl_lan------------------------$gl_bai"
+		echo -e "${gl_lan}0.   $gl_bai退出脚本"
+		echo -e "$gl_lan------------------------$gl_bai"
 		read -e -p "请输入你的选择: " choice
 
 		case $choice in
