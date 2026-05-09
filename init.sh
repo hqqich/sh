@@ -3,8 +3,8 @@
 
 # 这个脚本负责下载 base.sh 并执行它，支持 LAN 优先和根据国家/IP 选择下载源。
 sh_download() {
-    local script_path="$HOME/tsinglink-sh-script.sh"
-    local lan_url="http://172.22.90.1:5244/sh/base.sh"
+    local script_path="$HOME/qx-script.sh"
+    local lan_url="http://172.22.90.1:5244/1-tools/script/sh/base.sh"
 
     # LAN 可达时优先使用
     if curl -sS --head --max-time 1 "$lan_url" >/dev/null 2>&1; then

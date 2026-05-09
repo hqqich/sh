@@ -380,7 +380,7 @@ instruction_interaction_sh() {
 		echo " +-+-+-+-+-+-+-+-+-+-+-+-+"
 		echo " |T|S|I|N|G|L|I|N|K|.|S|H|"
 		echo " +-+-+-+-+-+-+-+-+-+-+-+-+"
-		echo -e "命令行输入${gl_huang}tss$gl_lan可快速启动脚本$gl_bai"
+		echo -e "命令行输入${gl_huang}qx$gl_lan可快速启动脚本$gl_bai"
 		echo -e "$gl_lan------------------------$gl_bai"
 		echo -e "${gl_lan}1.   ${gl_bai}sshd服务"
 		echo -e "${gl_lan}2.   ${gl_bai}开启http代理"
@@ -454,13 +454,13 @@ error "志"
 # 这确保了脚本仅在被直接执行时运行 main 逻辑，而在被 source 引用时仅加载函数定义，增强了模块化兼容性。
 if [[ "${BASH_SOURCE[0]}" == "${0}" ]]; then
 
-    sed -i '/^alias tss=/d' ~/.bashrc > /dev/null 2>&1
-    sed -i '/^alias tss=/d' ~/.profile > /dev/null 2>&1
-    sed -i '/^alias tss=/d' ~/.bash_profile > /dev/null 2>&1
-    cp -f ./tsinglink-sh-script.sh ~/tsinglink-sh-script.sh > /dev/null 2>&1
-    # tsinglink-sh-script  =>  tss
-    cp -f ~/tsinglink-sh-script.sh /usr/local/bin/tss > /dev/null 2>&1
-    ln -sf /usr/local/bin/tss /usr/bin/tss > /dev/null 2>&1
+    sed -i '/^alias qx=/d' ~/.bashrc > /dev/null 2>&1
+    sed -i '/^alias qx=/d' ~/.profile > /dev/null 2>&1
+    sed -i '/^alias qx=/d' ~/.bash_profile > /dev/null 2>&1
+    cp -f ./qx-script.sh ~/qx-script.sh > /dev/null 2>&1
+    # qx-script  =>  qx
+    cp -f ~/qx-script.sh /usr/local/bin/qx > /dev/null 2>&1
+    ln -sf /usr/local/bin/qx /usr/bin/qx > /dev/null 2>&1
 
     main "$@"
 fi
