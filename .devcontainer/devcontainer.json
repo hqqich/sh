@@ -1,0 +1,36 @@
+{
+    "name": "ubuntu",
+    "image": "ubuntu:24.04",
+    "features": {
+        "ghcr.io/devcontainers/features/common-utils:2": {
+            "installZsh": false,
+            "installOhMyZsh": false,
+            "upgradePackages": true
+        }
+    },
+    "customizations": {
+        "vscode": {
+            "settings": {
+                "shellcheck.enable": true,
+                "shellformat.flag": "-i 4",
+                "files.associations": {
+                    "*.sh": "shellscript",
+                    "*.bash": "shellscript",
+                    "*.bashrc": "shellscript",
+                    "*.bash_profile": "shellscript"
+                }
+            },
+            "extensions": [
+                "streetsidesoftware.code-spell-checker",
+                "timonwong.shellcheck",
+                "foxundermoon.shell-format",
+                "mads-hartmann.bash-ide-vscode",
+                "rbmk.shellman"
+            ]
+        }
+    },
+    "forwardPorts": [],
+    "portsAttributes": {},
+    "postCreateCommand": "apt-get update && export DEBIAN_FRONTEND=noninteractive && apt-get install -y shellcheck shfmt bash-completion && apt-get clean",
+    "remoteUser": "root"
+}
